@@ -7,6 +7,7 @@ import TimetableGrid from './TimetableGrid';
 
 const TimetableDataSet = () => {
     const [timetables, setTimetables] = useState([]);
+    const [removedLectures, setRemovedLectures] = useState({}); // ✅ 삭제된 강의를 각 시간표별로 관리
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -24,25 +25,46 @@ const TimetableDataSet = () => {
         fetchTimetables();
     }, []);
 
-    const handleTimetableSelect = (selectedTimetable) => {
-        navigate('/timetablecheck', { 
-            state: { selectedTimetable }
-        });
+    // ✅ 강의 삭제 기능 (각 시간표별 삭제된 강의 ID 저장)
+    const handleDeleteLecture = (timetableIndex, lectureId) => {
+        setRemovedLectures((prev) => ({
+            ...prev,
+            [timetableIndex]: [...(prev[timetableIndex] || []), lectureId],
+        }));
+
+        // ✅ 해당 시간표에서 강의 제거 후 상태 업데이트
+        setTimetables((prevTimetables) =>
+            prevTimetables.map((timetable, index) =>
+                index === timetableIndex
+                    ? timetable.filter((lecture) => lecture.id !== lectureId)
+                    : timetable
+            )
+        );
+    };
+
+    // ✅ 시간표 선택 시 삭제된 강의 반영
+    const handleTimetableSelect = (selectedTimetable, index) => {
+        const filteredTimetable = selectedTimetable.filter(
+            (lecture) => !(removedLectures[index] || []).includes(lecture.id)
+        );
+        navigate('/timetablecheck', { state: { selectedTimetable: filteredTimetable } });
     };
 
     return (
         <Layout>
-            <main className="main-content">
+            <main className="timetable-content">
                 <div className="tables-wrapper">
                     {timetables.map((timetable, index) => (
                         <div className="timetable-container" key={index}>
                             <h2>시간표 {index + 1}</h2>
-                            <TimetableGrid scheduleData={timetable} />
+                            <TimetableGrid 
+                                scheduleData={timetable}
+                                onDeleteLecture={(lectureId) => handleDeleteLecture(index, lectureId)}
+                            />
                             
-                            {/* ✅ 버튼 클래스 통일 (스타일 충돌 해결) */}
                             <button 
                                 className="timetable-button"
-                                onClick={() => handleTimetableSelect(timetable)}
+                                onClick={() => handleTimetableSelect(timetable, index)}
                             >
                                 시간표 선택
                             </button>

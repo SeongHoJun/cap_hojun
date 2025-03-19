@@ -1,0 +1,137 @@
+/* ===== 모달 전체 스타일 ===== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* ✅ 배경 어둡게 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* ===== 모달 창 스타일 ===== */
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 320px; /* ✅ 고정 크기 */
+    max-width: 90%; /* ✅ 반응형 */
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ===== 제목 스타일 ===== */
+.modal-content h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* ===== 내용 텍스트 스타일 ===== */
+.modal-content p {
+    font-size: 14px;
+    margin: 5px 0;
+    color: #555;
+}
+
+/* ===== 버튼 컨테이너 (확인 + 삭제) ===== */
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+/* ===== 확인 버튼 스타일 ===== */
+.modal-confirm-btn {
+    background-color: #4CAF50; /* ✅ 초록색 (확인) */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.modal-confirm-btn:hover {
+    background-color: #388E3C;
+}
+
+/* ===== 삭제 버튼 스타일 ===== */
+.delete-btn {
+    background-color: #d9534f; /* ✅ 빨간색 (삭제) */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.delete-btn:hover {
+    background-color: #c9302c;
+}
+
+/* ✅ 교수 변경 버튼 (파란색) */
+.modal-edit-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.2s;
+}
+
+.modal-edit-btn:hover {
+    background-color: #0056b3;
+}
+
+/* ✅ 교수 선택 드롭다운 스타일 */
+.modal-select {
+    padding: 4px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: border-color 0.2s;
+}
+
+.modal-select:hover {
+    border-color: #666;
+}
+
+/* ✅ 교수 변경 저장 버튼 */
+.modal-save-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: background-color 0.2s;
+}
+
+.modal-save-btn:hover {
+    background-color: #218838;
+}
+

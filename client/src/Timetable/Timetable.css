@@ -6,7 +6,7 @@
 }
 
 /* ===== 메인 컨텐츠 스타일 ===== */
-.main-content {
+.timetable-content {
     flex: 1;
     display: flex;
     justify-content: center;
@@ -27,6 +27,7 @@
     justify-content: center;
     align-items: center;
     padding: 0 1.5rem;
+    overflow: visible !important; /* ✅ 강의 블록이 숨겨지지 않도록 설정 */
 }
 
 /* ===== 개별 시간표 컨테이너 ===== */
@@ -39,6 +40,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: visible !important; /* ✅ 강의 블록이 잘리거나 숨겨지지 않게 설정 */
 }
 
 /* ===== 시간표 스타일 ===== */
@@ -49,6 +51,7 @@
     gap: 1px;
     margin: 0 auto;
     position: relative;
+    z-index: 2; /* ✅ 강의 블록이 그리드보다 위로 올라오도록 설정 */
 }
 
 /* ===== 요일 & 시간 스타일 ===== */
@@ -81,21 +84,69 @@
 /* ===== 강의 블록 스타일 ===== */
 .lecture-block {
     position: absolute;
-    width: 140px;
+    z-index: 10; /* ✅ 강의 블록이 항상 위에 나타나도록 설정 */
+    background: linear-gradient(135deg, #4A6FA5 0%, #6B8CC7 100%);
     color: white;
-    padding: 3px;
-    font-size: 14px;
+    padding: 6.5px;
+    font-size: 8px;
     border-radius: 5px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     text-align: center;
     transition: transform 0.2s, box-shadow 0.2s;
+    line-height: 1.4;
+    top: 0;
 }
 
-.lecture-block:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+/* ✅ 삭제 버튼 스타일 (기본적으로 숨김, 마우스 오버 시 표시) */
+.lecture-block .delete-btn {
+    opacity: 0;
+    visibility: hidden;
+    background-color: rgba(255, 77, 79, 0.9);
+    color: white;
+    border: none;
+    padding: 2px 6px;
+    font-size: 9px;
+    border-radius: 3px;
     cursor: pointer;
+    width: auto;
+    min-width: 28px;
+    height: 18px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out, background-color 0.2s, transform 0.1s;
+}
+
+/* ✅ 마우스를 올렸을 때 삭제 버튼 표시 */
+.lecture-block:hover .delete-btn {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ✅ 교수 선택 드롭다운 스타일 */
+.lecture-select {
+    padding: 4px;
+    font-size: 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    text-align: center;
+    width: 100%;
+}
+
+.lecture-select:hover {
+    border-color: #666;
+}
+
+.lecture-select:focus {
+    outline: none;
+    border-color: #4A6FA5;
 }
 
 /* ===== 버튼 스타일 (컨테이너 역할 포함) ===== */
@@ -105,7 +156,7 @@
     align-items: center;
     gap: 15px;
     width: 100%;
-    margin-top: 30px; /* 🔥 버튼 위치 조정 */
+    margin-top: 30px;
     background-color: rgba(68, 94, 180, 0.9);
     color: white;
     font-size: 14px;
@@ -124,26 +175,6 @@
 .timetable-button:hover {
     background-color: rgba(68, 94, 180, 1);
     transform: scale(1.03);
-}
-
-/* ===== 선택된 시간표 컨테이너 ===== */
-.timetable-check-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    padding: 0 20px;
-}
-
-.timetable-check-content {
-    width: 100%;
-    max-width: 850px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
 }
 
 /* ===== 반응형 디자인 ===== */

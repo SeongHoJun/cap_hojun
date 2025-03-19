@@ -69,14 +69,8 @@ function Main() {
               &#9776;
             </button>
           </div>
-<<<<<<< HEAD
           <nav className="nav-buttons">
             <button className="nav-button">로그아웃</button>
-=======
-          
-          <nav className={`nav-buttons ${isMenuOpen ? "open" : ""}`}>
-            <button className="nav-button">로그인</button>
->>>>>>> upstream/master
             <button className="nav-button">프로필 수정</button>
             <button className="nav-button">설명</button>
             <button className="nav-button" onClick={() => navigate("/inquiryForm")}>문의하기</button>

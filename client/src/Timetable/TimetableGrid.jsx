@@ -5,6 +5,7 @@ const TimetableGrid = ({
   scheduleData = [],
   setScheduleData,
   onDeleteLecture,
+  isReadOnly = false
 }) => {
   const [selectedLecture, setSelectedLecture] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -83,7 +84,10 @@ const TimetableGrid = ({
                 height: `${height - 1}px`,
                 width: `${CELL_WIDTH - 3}px`,
               }}
-              onClick={() => openModal(classInfo)}
+              onClick={() => 
+                { 
+                  if (!isReadOnly) openModal(classInfo);
+                }}
             >
               <div className="lecture-title">{classInfo.title}</div>
               <div className="lecture-instructor">{classInfo.instructor}</div>
@@ -93,12 +97,14 @@ const TimetableGrid = ({
       </div>
 
       {/* ✅ 모달에서 삭제 기능 전달 */}
+      {!isReadOnly && (
       <LectureModal
         isOpen={isModalOpen}
         lecture={selectedLecture}
         onClose={closeModal}
         onDelete={handleDeleteLecture}
       />
+      )}
     </>
   );
 };

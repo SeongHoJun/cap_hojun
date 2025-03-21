@@ -45,7 +45,10 @@ const TimetableCheck = () => {
                 <div className="tables-wrapper">
                     <div className="timetable-container">
                         <h2 className="timetable-title">선택된 시간표</h2>
-                        <TimetableGrid scheduleData={selectedTimetable} />
+                        <TimetableGrid 
+                            scheduleData={selectedTimetable}
+                            isReadOnly={true} // 클릭 막기    
+                        />
                         
                         {/* ✅ 기존 인라인 스타일 제거 & CSS 클래스 적용 */}
                         <div className="timetable-button-container">

@@ -20,14 +20,23 @@ const TimetableGrid = ({
     setSelectedLecture(null);
   };
 
-  // ✅ 수업 삭제 함수 (최신 상태 반영)
   const handleDeleteLecture = (lectureId) => {
     const updatedData = scheduleData.filter(
       (lecture) => lecture.title !== lectureId
     );
     setScheduleData(updatedData);
-    onDeleteLecture(lectureId); // ✅ 상위 컴포넌트에서도 업데이트
+    onDeleteLecture(lectureId);
     closeModal();
+  };
+
+  // ✅ 교수 변경 핸들러
+  const handleProfessorChange = (classId, newProfessor) => {
+    const updatedData = scheduleData.map((lecture) =>
+      lecture.title === classId
+        ? { ...lecture, instructor: newProfessor }
+        : lecture
+    );
+    setScheduleData(updatedData);
   };
 
   const hours = Array.from({ length: 11 }, (_, i) => 9 + i);
@@ -84,10 +93,9 @@ const TimetableGrid = ({
                 height: `${height - 1}px`,
                 width: `${CELL_WIDTH - 3}px`,
               }}
-              onClick={() => 
-                { 
-                  if (!isReadOnly) openModal(classInfo);
-                }}
+              onClick={() => {
+                if (!isReadOnly) openModal(classInfo);
+              }}
             >
               <div className="lecture-title">{classInfo.title}</div>
               <div className="lecture-instructor">{classInfo.instructor}</div>
@@ -96,14 +104,15 @@ const TimetableGrid = ({
         })}
       </div>
 
-      {/* ✅ 모달에서 삭제 기능 전달 */}
+      {/* 모달 */}
       {!isReadOnly && (
-      <LectureModal
-        isOpen={isModalOpen}
-        lecture={selectedLecture}
-        onClose={closeModal}
-        onDelete={handleDeleteLecture}
-      />
+        <LectureModal
+          isOpen={isModalOpen}
+          lecture={selectedLecture}
+          onClose={closeModal}
+          onDelete={handleDeleteLecture}
+          onProfessorChange={handleProfessorChange} // ✅ 전달
+        />
       )}
     </>
   );

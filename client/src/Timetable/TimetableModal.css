@@ -5,132 +5,150 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.4); /* ✅ 배경 어둡게 */
+    background: rgba(0, 0, 0, 0.4);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-}
-
-/* ===== 모달 창 스타일 ===== */
-.modal-content {
+  }
+  
+  /* ===== 모달 박스 ===== */
+  .modal-content {
     background: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 320px; /* ✅ 고정 크기 */
-    max-width: 90%; /* ✅ 반응형 */
-    text-align: center;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    position: relative;
+    padding: 24px 20px;
+    border-radius: 12px;
+    width: 320px;
+    max-width: 90%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
-    align-items: center;
-}
-
-/* ===== 제목 스타일 ===== */
-.modal-content h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #333;
-}
-
-/* ===== 내용 텍스트 스타일 ===== */
-.modal-content p {
-    font-size: 14px;
-    margin: 5px 0;
-    color: #555;
-}
-
-/* ===== 버튼 컨테이너 (확인 + 삭제) ===== */
-.modal-buttons {
+    align-items: stretch;
+  }
+  
+  /* ===== 제목 (과목명) ===== */
+  .modal-content h2 {
+    font-size: 22px; /* ✅ 더 크게 */
+    font-weight: bold;
+    color: #264aa0;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* ===== 정보 한 줄 ===== */
+  .info-row {
     display: flex;
-    justify-content: center;
+    align-items: center;
     gap: 12px;
-    margin-top: 15px;
-}
-
-/* ===== 확인 버튼 스타일 ===== */
-.modal-confirm-btn {
-    background-color: #4CAF50; /* ✅ 초록색 (확인) */
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    font-size: 14px;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.modal-confirm-btn:hover {
-    background-color: #388E3C;
-}
-
-/* ===== 삭제 버튼 스타일 ===== */
-.delete-btn {
-    background-color: #d9534f; /* ✅ 빨간색 (삭제) */
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    font-size: 14px;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.delete-btn:hover {
-    background-color: #c9302c;
-}
-
-/* ✅ 교수 변경 버튼 (파란색) */
-.modal-edit-btn {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 4px 8px;
-    font-size: 12px;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 10px;
-    transition: background-color 0.2s;
-}
-
-.modal-edit-btn:hover {
-    background-color: #0056b3;
-}
-
-/* ✅ 교수 선택 드롭다운 스타일 */
-.modal-select {
-    padding: 4px;
-    font-size: 14px;
-    border-radius: 5px;
+    margin: 6px 0;
+    justify-content: flex-start;
+  }
+  
+  /* ===== 라벨 (교수/시간/코드) ===== */
+  .info-label {
+    font-size: 17px;  /* ✅ 살짝 키움 */
+    font-weight: 500;
+    color: #111;
+    min-width: 70px;
+    text-align: left;
+    padding-left: 20px;
+  }
+  
+  /* ===== 값 (홍길동 / 13:00 ~ 14:00 등) ===== */
+  .info-value {
+    font-size: 17px;  /* ✅ 살짝 키움 */
+    color: #000;
+    font-weight: 400;
+  }
+  
+  /* ===== 교수 선택 줄 (드롭다운 or 텍스트 + 버튼) ===== */
+  .professor-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 6px 0;
+    justify-content: flex-start;
+    width: 100%;
+  }
+  
+  .professor-inline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .professor-name {
+    font-size: 17px; /* ✅ 키움 */
+    color: #000;
+  }
+  
+  /* ===== 드롭다운 스타일 ===== */
+  .modal-select {
+    padding: 3px 8px;
+    font-size: 13px;
+    border-radius: 4px;
     border: 1px solid #ccc;
     background-color: white;
     cursor: pointer;
-    margin-left: 5px;
-    transition: border-color 0.2s;
-}
-
-.modal-select:hover {
-    border-color: #666;
-}
-
-/* ✅ 교수 변경 저장 버튼 */
-.modal-save-btn {
-    background-color: #28a745;
+    min-width: 70px;
+    max-width: 90px;
+  }
+  
+  /* ===== 교수 변경, 저장 버튼 ===== */
+  .modal-edit-btn,
+  .modal-save-btn {
+    background-color: #2c3eeb;
     color: white;
     border: none;
-    padding: 4px 8px;
-    font-size: 12px;
+    padding: 4px 8px; /* ✅ 작게 조정 */
+    font-size: 12px;   /* ✅ 작게 조정 */
+    line-height: 1;
     font-weight: bold;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
-    margin-left: 5px;
+    white-space: nowrap;
     transition: background-color 0.2s;
-}
-
-.modal-save-btn:hover {
-    background-color: #218838;
-}
+  }
+  
+  .modal-edit-btn:hover,
+  .modal-save-btn:hover {
+    background-color: #1f2fb9;
+  }
+  
+  /* ===== 하단 버튼 컨테이너 ===== */
+  .modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+    gap: 16px;
+  }
+  
+  /* ===== 확인/삭제 버튼 ===== */
+  .modal-confirm-btn,
+  .delete-btn {
+    flex: 1;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 0;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .modal-confirm-btn {
+    background-color: #004098;
+    color: white;
+  }
+  
+  .modal-confirm-btn:hover {
+    background-color: #1e3a80;
+  }
+  
+  .delete-btn {
+    background-color: #d9534f;
+    color: white;
+  }
+  
+  .delete-btn:hover {
+    background-color: #c9302c;
+  }
+  

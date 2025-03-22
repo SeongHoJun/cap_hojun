@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./TimetableModal.css";
 
 const LectureModal = ({
@@ -9,11 +9,22 @@ const LectureModal = ({
   onProfessorChange,
 }) => {
   const [isEditingProfessor, setIsEditingProfessor] = useState(false);
-  const [selectedProfessor, setSelectedProfessor] = useState(
-    lecture?.instructor
-  );
+  const [selectedProfessor, setSelectedProfessor] = useState("");
+
+  useEffect(() => {
+    if (lecture?.instructor) {
+      setSelectedProfessor(lecture.instructor);
+      setIsEditingProfessor(false);
+    }
+  }, [lecture]);
 
   if (!isOpen || !lecture) return null;
+
+  const baseProfessorName = lecture?.instructor || "홍길동";
+  const professorList =
+    Array.isArray(lecture.professorList) && lecture.professorList.length > 0
+      ? lecture.professorList
+      : generateDummyProfessors(baseProfessorName);
 
   const handleProfessorChange = (classId, newProfessor) => {
     setSelectedProfessor(newProfessor);
@@ -29,34 +40,51 @@ const LectureModal = ({
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <h2>{lecture.title}</h2>
 
-        <p>
-          <strong>교수:</strong>
+        <div className="professor-row">
+          <span className="info-label">교수 :</span>
           {!isEditingProfessor ? (
-            <>
-              {lecture.instructor}
-              <button className="modal-edit-btn">교수 변경</button>
-            </>
+            <div className="professor-inline">
+              <span className="professor-name">{selectedProfessor}</span>
+              <button
+                className="modal-edit-btn"
+                onClick={() => setIsEditingProfessor(true)}
+              >
+                교수 변경
+              </button>
+            </div>
           ) : (
-            <>
-              <ProfessorSelect
-                classId={lecture.title}
-                professorList={lecture.professorList}
-                selectedProfessor={selectedProfessor}
-                onProfessorChange={handleProfessorChange}
-              />
+            <div className="professor-inline">
+              <select
+                className="modal-select"
+                value={selectedProfessor}
+                onChange={(e) =>
+                  handleProfessorChange(lecture.title, e.target.value)
+                }
+              >
+                {professorList.map((prof, idx) => (
+                  <option key={idx} value={prof}>
+                    {prof}
+                  </option>
+                ))}
+              </select>
               <button className="modal-save-btn" onClick={handleSaveProfessor}>
                 저장
               </button>
-            </>
+            </div>
           )}
-        </p>
+        </div>
 
-        <p>
-          <strong>시간:</strong> {lecture.startTime} - {lecture.endTime}
-        </p>
-        <p>
-          <strong>요일:</strong> {lecture.day}
-        </p>
+        <div className="info-row">
+          <span className="info-label">시간 :</span>
+          <span className="info-value">
+            {lecture.startTime} - {lecture.endTime}
+          </span>
+        </div>
+
+        <div className="info-row">
+          <span className="info-label">요일 :</span>
+          <span className="info-value">{lecture.day}</span>
+        </div>
 
         <div className="modal-buttons">
           <button className="modal-confirm-btn" onClick={onClose}>
@@ -72,6 +100,11 @@ const LectureModal = ({
       </div>
     </div>
   );
+};
+
+const generateDummyProfessors = (baseName) => {
+  const base = baseName || "홍길동";
+  return [base, `${base}A`, `${base}B`, `${base}C`];
 };
 
 export default LectureModal;

@@ -46,3 +46,27 @@
     font-size: 0.85rem;
     color: #4B5563;
 }
+
+.main-content {
+    overflow-x: visible !important;
+    width: 100vw;
+  }
+
+  /* ✅ 모바일 대응 */
+@media (max-width: 600px) {
+    .logo {
+      width: 40px;
+    }
+  
+    .university-name-ko {
+      font-size: 1rem;
+    }
+  
+    .university-name-en {
+      font-size: 0.75rem;
+    }
+  
+    .header-container {
+      padding: 0 0.75rem;
+    }
+  }

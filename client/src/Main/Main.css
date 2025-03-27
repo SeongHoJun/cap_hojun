@@ -119,13 +119,23 @@ select {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* 수직 중앙 정렬 */
-  align-items: center; /* 수평 중앙 정렬 */
-  max-width: 800px;
-  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
   padding: 0 2rem;
   width: 100%;
-  margin-top: -50px; /* 약간 위로 올려서 시각적 중앙 조정 */
+  margin-top: -50px;
+}
+
+/* 기본 너비 제한 (로그인, 일반 화면용) */
+.main-content:not(.timetable-layout) {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* 시간표용 확장 해제 */
+.main-content.timetable-layout {
+  max-width: 100%;
+  margin: 0;
 }
 
 .title-section {

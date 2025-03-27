@@ -1,7 +1,9 @@
 import React from "react";
 import "./Layout.css";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, layoutType = "default" }) => {
+  const isTimetableLayout = layoutType === "timetable";
+
   return (
     <div className="min-h-screen">
       <header className="header">
@@ -15,7 +17,9 @@ const Layout = ({ children }) => {
           </div>
         </div>
       </header>
-      <main className="main-content">{children}</main>
+      <main className={`main-content ${isTimetableLayout ? "timetable-layout" : ""}`}>
+        {children}
+      </main>
     </div>
   );
 };

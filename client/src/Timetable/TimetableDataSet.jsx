@@ -1,51 +1,66 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./timetable.css";
-import Layout from "../Layout/Layout";
+import "./TimetableMedia.css";
 import { useNavigate } from "react-router-dom";
 import TimetableGrid from "./TimetableGrid";
 
 const TimetableDataSet = () => {
   const [timetables, setTimetables] = useState([]);
-  const [removedLectures, setRemovedLectures] = useState({}); // ✅ 삭제된 강의 관리
+  const [removedLectures, setRemovedLectures] = useState({});
+  const [isRendered, setIsRendered] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTimetables = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8000/api/timetables"
-        );
-        console.log("받아온 시간표 데이터:", response.data);
+        const response = await axios.get("http://localhost:8000/api/timetables");
         setTimetables(response.data);
       } catch (error) {
         console.error("시간표 데이터 가져오기 실패:", error);
         setTimetables([[], [], []]);
       }
     };
-
     fetchTimetables();
   }, []);
 
-  // ✅ 강의 삭제 기능 (각 시간표별 삭제된 강의 ID 저장)
+  useEffect(() => {
+    if (timetables.length > 0) setIsRendered(true);
+  }, [timetables]);
+
+  useEffect(() => {
+    if (isRendered) {
+      const wrapper = document.querySelector(".tables-wrapper");
+      if (wrapper) wrapper.scrollLeft = 0;
+    }
+  }, [isRendered]);
+
   const handleDeleteLecture = (timetableIndex, lectureId) => {
     setRemovedLectures((prev) => ({
       ...prev,
       [timetableIndex]: [...(prev[timetableIndex] || []), lectureId],
     }));
-
-    // ✅ 해당 시간표에서 강의 제거 후 상태 업데이트
-    setTimetables((prevTimetables) =>
-      prevTimetables.map((timetable, index) =>
-        index === timetableIndex
-          ? timetable.filter((lecture) => lecture.title !== lectureId)
-          : timetable
+    setTimetables((prev) =>
+      prev.map((table, i) =>
+        i === timetableIndex ? table.filter((lec) => lec.title !== lectureId) : table
       )
     );
   };
 
   return (
-    <Layout>
+    <div className="min-h-screen">
+      <header className="header">
+        <div className="header-container">
+          <div className="logo-section">
+            <img src="/logo2.png" alt="계명대학교" className="logo" />
+            <div className="logo-text">
+              <span className="university-name-ko">계명대학교</span>
+              <span className="university-name-en">KEIMYUNG UNIVERSITY</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
       <main className="timetable-content">
         <div className="tables-wrapper">
           {timetables.map((timetable, index) => (
@@ -53,18 +68,13 @@ const TimetableDataSet = () => {
               <h2>시간표 {index + 1}</h2>
               <TimetableGrid
                 scheduleData={timetable}
-                setScheduleData={(updatedTimetable) => {
+                setScheduleData={(updated) =>
                   setTimetables((prev) =>
-                    prev.map((table, idx) =>
-                      idx === index ? updatedTimetable : table
-                    )
-                  );
-                }}
-                onDeleteLecture={(lectureId) =>
-                  handleDeleteLecture(index, lectureId)
+                    prev.map((table, i) => (i === index ? updated : table))
+                  )
                 }
+                onDeleteLecture={(lectureId) => handleDeleteLecture(index, lectureId)}
               />
-
               <button
                 className="timetable-button"
                 onClick={() =>
@@ -79,7 +89,7 @@ const TimetableDataSet = () => {
           ))}
         </div>
       </main>
-    </Layout>
+    </div>
   );
 };
 

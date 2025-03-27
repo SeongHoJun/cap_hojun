@@ -1,0 +1,47 @@
+  /* ===== 반응형 모바일 슬라이드 대응 ===== */
+  @media (max-width: 600px) {
+    .main-content {
+      display: block !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+  
+    .timetable-content {
+      display: block !important;
+      padding: 0.5rem 1rem 0 !important;
+      margin: 0 !important;
+      height: auto !important;
+    }
+  
+    .tables-wrapper {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      white-space: nowrap;
+      justify-content: flex-start;
+      padding: 0;
+      gap: 1rem;
+    }
+  
+    .timetable-container {
+      min-width: 100vw;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+    }
+  
+    .timetable-container h2 {
+      margin-top: 1rem !important;
+    }
+  
+    .header {
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
+    }
+  
+    .logo {
+      margin-bottom: 0 !important;
+    }
+  }
+  
